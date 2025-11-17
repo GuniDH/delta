@@ -1,5 +1,5 @@
 /*------------------------------------------------------
-* Filename: [max.c]
+* Filename: [compute_max.c]
 * Description: [find max out of variables]
 * Author: guni deyo haness
 -------------------------------------------------------*/
