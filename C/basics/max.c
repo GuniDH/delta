@@ -1,7 +1,7 @@
 /*------------------------------------------------------
 * Filename: [max.c]
 * Description: [find max out of variables]
-* Author: [Your full name here]
+* Author: guni deyo haness
 -------------------------------------------------------*/
 
 
