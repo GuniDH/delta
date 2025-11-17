@@ -32,7 +32,7 @@ void print_structure_base() {
 }
 
 void print_vertical_structure() {
-    printf("                   ::                  \n                   ::                  \n                   ::                  \n                   ::                  \n");
+    printf("                  ::                  \n                  ::                  \n                  ::                  \n                  ::                  \n");
 }
 
 void print_base() {
