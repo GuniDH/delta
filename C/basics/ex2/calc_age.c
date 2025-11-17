@@ -36,8 +36,8 @@ void calc_age() {
     age_in_months = (double)age_in_days / MONTH_DAYS;
     age_in_years = (double)age_in_days / YEAR_DAYS;
     printf("Gary's age in days:%d\n", age_in_days);
-    printf("Gary's age in days:%f\n", age_in_months);
-    printf("Gary's age in days:%f\n", age_in_years);
+    printf("Gary's age in months:%f\n", age_in_months);
+    printf("Gary's age in years:%f\n", age_in_years);
 }
 
 
