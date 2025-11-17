@@ -1,6 +1,6 @@
 /*------------------------------------------------------
-* Filename: [num.c]
-* Description: [prints hanukia]
+* Filename: [num_sum.c]
+* Description: [checks if sum of first and last is same as rest]
 * Author: guni deyo haness
 -------------------------------------------------------*/
 
@@ -8,36 +8,26 @@
 
 #define TRUE (1)
 #define FALSE (0)
-// Let me know if you want me to use the standard library for booleans which i believe exists
 
-int is_digit(int num){
-    if (num >= 0 && num <= 9) {
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-}
 
 int main() {
-    int sum, n_i;
-
-    int is_first_iter = TRUE;
-    // the instructions didnt mention need to print for input
-    do { 
-        scanf("%d", &n_i);
-        sum = (is_first_iter) ? sum + n_i : sum - n_i;
-        if (is_first_iter){
-            is_first_iter = FALSE;
+    int n_i, first, last, mid_sum=0, count=0,prev=0;
+    while(scanf("%d",&n_i)==1){
+        if (count==0){
+            first = n_i;
         }
-    }  while(is_digit(n_i));
-    // take in account for the last iteration
-    
-    sum += (2 * n_i); // n_i holds the last number
-    if (sum){
-        printf("The sum is not equal");
+        else if(count>1){
+            mid_sum+=prev;
+        }
+        prev = n_i;
+        count++;
+    }
+    last=prev;
+    if (first+last == mid_sum){
+        printf("The sum is equal");
     }
     else{
-        printf("The sum is equal");
+        printf("The sum is not equal");
     }
     return 0;
 }
