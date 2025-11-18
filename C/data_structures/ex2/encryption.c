@@ -7,53 +7,65 @@
 #include <stdio.h>
 #include <string.h>
 
-#define ARRAY_LEN (15)
-#define INCREASING (0)
-#define DECREASING (1)
-#define CONSTANT (2)
+#define ARR_LEN (26)
+
+// moves n forward cyclicly
+void reverse(int*arr, int n){
+    int i=0, j=n-1;
+    while(i<j){
+        int tmp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=tmp;
+        i++;
+        j--;
+    }
+}
+
+void encrypt(int*arr){
+    int tmp[ARR_LEN];
+    int mid = ARR_LEN/2; // switch halfs
+    memcpy(tmp,arr,mid);
+    memcpy(arr,&arr[mid],mid);
+    memcpy(&arr[mid],tmp,mid);
+
+    //reverse step 6
+    for(int i = ARR_LEN-1;i>0;i--){
+        arr[i]-=arr[i-1];
+    }
+
+    // its a known interview question to move forward by 3 reverses
+    int num_steps=5;
+    num_steps %= ARR_LEN;
+    int split_idx = ARR_LEN-num_steps;
+    reverse(arr,split_idx);
+    reverse(&arr[split_idx],ARR_LEN-split_idx);
+    reverse(arr,ARR_LEN);
+
+    for(int i =1;i<ARR_LEN;i*=2){
+        // we can access 1 because the messages are always 26 nums
+        arr[i]/=7;
+    }
+
+    num_steps=4;
+    split_idx=num_steps;
+    reverse(arr,split_idx);
+    reverse(&arr[split_idx],ARR_LEN-split_idx);
+    reverse(arr,ARR_LEN);
+
+    int to_lower=5; //print result decrypted
+    for(int i =0;i<ARR_LEN;i++){
+        putchar((char)(arr[i]-to_lower));
+    }
+}
 
 int main() {
-    int arr[ARRAY_LEN];
-    int state;
-    int prev;
-    printf("Give me an array of %d characters\n",ARRAY_LEN);
-    if(scanf("%d", &arr[0])!=1){
-        printf("The array is constant");
-        return 0;
-    }
-    if(scanf("%d", &arr[1])!=1){
-        printf("The array is constant");
-        return 0;
-    }
-    // we have 2 already
-    if (arr[0]<arr[1]){
-        state=INCREASING;
-    }
-    else if(arr[0]>arr[1]){
-        state=DECREASING;
-    }
-    else{
-        state=CONSTANT;
-    }
-    prev= arr[1];
-    for (int i=2;i<ARRAY_LEN;i++){
+    int arr[ARR_LEN];
+    for(int i = 0;i<ARR_LEN;i++){ 
         if(scanf("%d", &arr[i])!=1){
-            break;
+            printf("ARR_LEN should be 26!");
+            return 1;
         }
-        if (state==DECREASING && prev<=arr[i] || state==INCREASING && prev>=arr[i] || state==CONSTANT && prev!=arr[i]){
-            printf("The array is messed up");
-            return 0;
-        }
-        prev=arr[i];
     }
-    if(state==INCREASING){ // we could use a dictionary to do the prints without any ifs to be shorter
-        printf("The array is increasing");
-    }
-    else if(state==DECREASING){
-        printf("The array is decreasing");
-    }
-    else {
-        printf("The array is constant");
-    }
+    encrypt(arr);
     return 0;
 }
