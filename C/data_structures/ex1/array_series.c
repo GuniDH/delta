@@ -15,14 +15,14 @@ int main() {
     int arr[ARRAY_LEN];
     int state;
     int prev;
-    printf("Give me an array of %d characters\n",ARRAY_LEN);
+    printf("Give me an array of %d numbers\n",ARRAY_LEN);
     if(scanf("%d", &arr[0])!=1){
-        printf("The array is constant");
-        return 0;
+        printf("BAD INPUT SHOULD GIVE %d NUMBERS", ARRAY_LEN);
+        return 1;
     }
     if(scanf("%d", &arr[1])!=1){
-        printf("The array is constant");
-        return 0;
+        printf("BAD INPUT SHOULD GIVE %d NUMBERS", ARRAY_LEN);
+        return 1;
     }
     // we have 2 already
     if (arr[0]<arr[1]){
@@ -37,7 +37,8 @@ int main() {
     prev= arr[1];
     for (int i=2;i<ARRAY_LEN;i++){
         if(scanf("%d", &arr[i])!=1){
-            break;
+            printf("BAD INPUT SHOULD GIVE %d NUMBERS", ARRAY_LEN);
+            return 1;
         }
         if (state==DECREASING && prev<=arr[i] || state==INCREASING && prev>=arr[i] || state==CONSTANT && prev!=arr[i]){
             printf("The array is messed up");
