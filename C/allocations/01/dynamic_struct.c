@@ -26,18 +26,18 @@ void deallocate(Time *t1, Time *t2){
 // return true if no error in input
 int get_input(Time *t){
     printf("Give hours max %d\n", MAX_HRS);
-    scanf("%d", &t->hrs);
-    if(!(t->hrs>=0 && t->hrs<=MAX_HRS)){
+    if((scanf("%d", &t->hrs)) != 1 || !(t->hrs>=0 && t->hrs<=MAX_HRS)){
+        printf("Input has to be an integer in the specified range I noted\n");
         return 0;
     }
     printf("Give minutes max %d\n", MAX_MINS);
-    scanf("%d", &t->mins);
-    if(!(t->mins>=0 && t->mins<=MAX_MINS)){
+    if((scanf("%d", &t->mins)) != 1 || !(t->mins>=0 && t->mins<=MAX_MINS)){
+        printf("Input has to be an integer in the specified range I noted\n");
         return 0;
     }
     printf("Give seconds max %d\n", MAX_SECS);
-    scanf("%d", &t->secs);
-    if(!(t->secs>=0 && t->secs<=MAX_SECS)){
+    if((scanf("%d", &t->secs)) != 1 || !(t->secs>=0 && t->secs<=MAX_SECS)){
+        printf("Input has to be an integer in the specified range I noted\n");
         return 0;
     }
     return 1;
@@ -48,10 +48,21 @@ Time * add_times(Time *t1, Time *t2){
     if(res==NULL){
         return NULL;
     }
-    res->secs=(t1->secs+t2->secs)%(MAX_SECS+1); // we need to start from the smallest unit to accumalte overflow to the next unit
-    res->mins=((t1->secs+t2->secs)/(MAX_SECS+1) + (t1->mins+t2->mins))%(MAX_MINS+1);
-    res->hrs=((t1->mins+t2->mins)/(MAX_MINS+1) + (t1->hrs+t2->hrs))%(MAX_HRS+1);
-    res->hrs = (t1->hrs + t2->hrs)%(MAX_HRS+1); // there is no day field
+
+    int sec_limit = MAX_SECS+1;
+    int total_secs=t1->secs+t2->secs;
+    res->secs=total_secs%sec_limit; //the remainder is the actual seconds
+    int carry_mins = total_secs / sec_limit; // carry to minutes
+
+    int min_limit = MAX_MINS+1;
+    int total_mins=t1->mins+t2->mins+carry_mins;
+    res->mins=total_mins%min_limit;
+    int carry_hrs = total_mins / min_limit;
+
+    int hrs_limit= MAX_HRS+1;
+    int total_hours=t1->hrs+t2->hrs+carry_hrs;
+    res->hrs=total_hours%hrs_limit;
+    // no carry for days 
     return res;
 }
 
@@ -78,7 +89,7 @@ int main() {
         deallocate(t1,t2);
         return 1;
     }
-    // we werent told to print t3 or do anything with it
+    printf("%d:%d:%d", res->hrs, res->mins, res->secs);
     free(t1);
     free(t2);
     free(res);
